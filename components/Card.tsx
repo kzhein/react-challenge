@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({ cardData }) => {
         <img
           src={cardData.images.small}
           alt={cardData.name}
-          style={{ height: '21rem' }}
+          className='md:h-72 lg:h-80'
         />
         <p className='text-xl font-semibold mt-1'>{cardData.name}</p>
         <p className='text-sm text-sky-500'>{cardData.rarity}</p>
