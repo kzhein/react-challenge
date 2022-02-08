@@ -13,6 +13,7 @@ const Home: NextPage = () => {
   const { count, totalCount } = metaData;
   const firstUpdate = useRef(true);
 
+  // search for cards if ther is any change in filters (name, type, rarity, set)
   useEffect(() => {
     if (firstUpdate.current) {
       firstUpdate.current = false;
@@ -32,6 +33,7 @@ const Home: NextPage = () => {
             <Card key={card.id} cardData={card} />
           ))}
         </div>
+        {/* Show load more button if there is any left */}
         {count < totalCount && (
           <button
             type='button'
@@ -48,6 +50,7 @@ const Home: NextPage = () => {
 };
 
 export async function getServerSideProps(context: any) {
+  // render the first 12 cards on server side and pass it as props
   const { data } = await axios.get(
     'https://api.pokemontcg.io/v2/cards?pageSize=12&page=1'
   );

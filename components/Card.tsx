@@ -11,6 +11,7 @@ const Card: React.FC<CardProps> = ({ cardData }) => {
 
   const isSelected = cart.cartItems.find(item => item.card.id === cardData.id);
 
+  // toggle card from the cart
   const handleClick = () => {
     if (isSelected) {
       removeFromCart(cardData);
