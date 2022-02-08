@@ -1,8 +1,14 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '@fortawesome/fontawesome-free/css/all.css';
+import type { AppProps } from 'next/app';
+import '../styles/globals.css';
+import { AppStateProvider } from '../utils/appState';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <AppStateProvider initialData={pageProps.initialData}>
+      <Component {...pageProps} />
+    </AppStateProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
