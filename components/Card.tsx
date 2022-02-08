@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card } from '../types';
+import { CartStateContext } from '../utils/cartState';
 
 interface CardProps {
   cardData: Card;
 }
 
 const Card: React.FC<CardProps> = ({ cardData }) => {
+  const { addToCart, removeFromCart, cart } = useContext(CartStateContext);
+  console.log({ cart });
+
+  const isSelected = cart.cartItems.find(item => item.card.id === cardData.id);
+
+  const handleClick = () => {
+    if (isSelected) {
+      removeFromCart(cardData);
+    } else {
+      addToCart(cardData);
+    }
+  };
+
   return (
     <div className='relative flex flex-col items-center mx-3'>
       <div className='bg-white absolute bottom-0 left-0 h-2/4 w-full rounded-xl'></div>
@@ -24,9 +38,12 @@ const Card: React.FC<CardProps> = ({ cardData }) => {
         </div>
         <button
           type='button'
-          className='bg-amber-300 py-2 px-10 rounded-3xl font-medium translate-y-1/2'
+          className={` ${
+            isSelected ? 'bg-black text-white' : 'bg-amber-300'
+          } py-2 px-10 rounded-3xl font-medium translate-y-1/2`}
+          onClick={handleClick}
         >
-          Select Card
+          {isSelected ? 'Selected' : 'Select Card'}
         </button>
       </div>
     </div>

@@ -18,3 +18,8 @@ export interface Card {
     small: string;
   };
 }
+
+export interface CartItem {
+  card: Card;
+  quantity: number;
+}

@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { useContext, useEffect, useRef } from 'react';
 import Card from '../components/Card';
+import Cart from '../components/Cart';
 import Filters from '../components/Filters';
 import Header from '../components/Header';
 import { AppStateContext } from '../utils/appState';
@@ -40,6 +41,7 @@ const Home: NextPage = () => {
             <i className='fas fa-search mr-2'></i>Show More
           </button>
         )}
+        <Cart />
       </div>
     </div>
   );
