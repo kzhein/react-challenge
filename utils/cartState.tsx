@@ -42,9 +42,12 @@ export function CartStateProvider({ children }: { children: any }) {
     setCart(prevCart => ({
       cartItems: prevCart.cartItems.filter(it => it.card.id !== item.id),
       totalPrice:
-        prevCart.totalPrice -
-        itemToRemove!.card.cardmarket.prices.averageSellPrice *
-          itemToRemove!.quantity,
+        Math.round(
+          (prevCart.totalPrice -
+            itemToRemove!.card.cardmarket.prices.averageSellPrice *
+              itemToRemove!.quantity) *
+            100
+        ) / 100,
     }));
   };
 
