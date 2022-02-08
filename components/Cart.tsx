@@ -4,7 +4,7 @@ import CartItem from './CartItem';
 
 const Cart = () => {
   const [showCart, setShowCart] = useState(false);
-  const { cart } = useContext(CartStateContext);
+  const { cart, clearCart } = useContext(CartStateContext);
 
   return (
     <div>
@@ -15,6 +15,15 @@ const Cart = () => {
               <CartItem key={item.card.id} item={item} />
             ))}
           </div>
+          {cart.cartItems.length > 0 && (
+            <p
+              className='text-gray-700 text-sm underline cursor-pointer'
+              onClick={clearCart}
+            >
+              Clear All
+            </p>
+          )}
+
           <div className='w-full py-3 px-14 mb-2'>
             <div className='flex justify-between items-center'>
               <p className='text-lg font-medium'>Total cards</p>
@@ -29,12 +38,14 @@ const Cart = () => {
               </p>
             </div>
           </div>
-          <button
-            type='button'
-            className='bg-sky-500 py-2 px-10 rounded-3xl font-medium text-white'
-          >
-            Pay Now
-          </button>
+          {cart.cartItems.length > 0 && (
+            <button
+              type='button'
+              className='bg-sky-500 py-2 px-10 rounded-3xl font-medium text-white'
+            >
+              Pay Now
+            </button>
+          )}
 
           <button
             type='button'

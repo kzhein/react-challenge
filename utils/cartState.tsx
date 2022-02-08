@@ -8,6 +8,8 @@ export const CartStateContext = createContext<{
   };
   addToCart: any;
   removeFromCart: any;
+  clearCart: any;
+  changeCartItemCount: any;
 }>({
   cart: {
     cartItems: [],
@@ -15,6 +17,8 @@ export const CartStateContext = createContext<{
   },
   addToCart: null,
   removeFromCart: null,
+  clearCart: null,
+  changeCartItemCount: null,
 });
 
 export function CartStateProvider({ children }: { children: any }) {
@@ -51,12 +55,43 @@ export function CartStateProvider({ children }: { children: any }) {
     }));
   };
 
-  const changeCount = () => {};
+  const changeCartItemCount = (item: any, value: number) => {
+    const itemToChange = cart.cartItems.find(it => it.card.id === item.card.id);
 
-  const clearCart = () => {};
+    setCart(prevCart => ({
+      cartItems: prevCart.cartItems.map(it =>
+        it.card.id === itemToChange!.card.id
+          ? { ...it, quantity: it.quantity + value }
+          : it
+      ),
+      totalPrice:
+        Math.round(
+          (value > 0
+            ? prevCart.totalPrice +
+              itemToChange!.card.cardmarket.prices.averageSellPrice
+            : prevCart.totalPrice -
+              itemToChange!.card.cardmarket.prices.averageSellPrice) * 100
+        ) / 100,
+    }));
+  };
+
+  const clearCart = () => {
+    setCart({
+      cartItems: [],
+      totalPrice: 0,
+    });
+  };
 
   return (
-    <CartStateContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartStateContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        changeCartItemCount,
+      }}
+    >
       {children}
     </CartStateContext.Provider>
   );

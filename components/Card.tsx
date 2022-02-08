@@ -8,7 +8,6 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ cardData }) => {
   const { addToCart, removeFromCart, cart } = useContext(CartStateContext);
-  console.log({ cart });
 
   const isSelected = cart.cartItems.find(item => item.card.id === cardData.id);
 
