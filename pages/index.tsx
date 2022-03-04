@@ -13,13 +13,18 @@ const Home: NextPage = () => {
   const { count, totalCount } = metaData;
   const firstUpdate = useRef(true);
 
-  // search for cards if ther is any change in filters (name, type, rarity, set)
+  // search for cards if there is any change in filters (name, type, rarity, set)
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
     if (firstUpdate.current) {
       firstUpdate.current = false;
     } else {
-      searchCards();
+      timeout = setTimeout(searchCards, 500);
     }
+
+    return () => clearTimeout(timeout);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
